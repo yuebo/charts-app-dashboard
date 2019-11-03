@@ -31,7 +31,7 @@
         legendArr: [],
         color: this.$store.state.color,
         myChart: {},
-        name: '2018案件类型统计',
+        name: '2019案件类型统计',
         startDate: '',
         endDate: '',
         data: []
@@ -92,7 +92,8 @@
             startDate: this.startDate,
             endDate: this.endDate,
             groupBy: 'origin',
-            level1: '住房保障'
+            level1: '住房保障',
+            total: false
           }
         })
         promise.then(data => {

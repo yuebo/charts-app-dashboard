@@ -48,13 +48,14 @@
   .pro_list
     position absolute
     right 22px
-    width 102px
+    width 110px
     text-align left
     background #1e3642
     font-size 14px
     margin-top 22px
     /*max-height 180px*/
-    overflow hidden
+    overflow-y scroll
+    max-height 400px
     z-index 9
     li
       height 36px

@@ -1,8 +1,10 @@
 <style lang="stylus" rel="stylesheet/stylus">
 .mainApp
+  margin 0 0
   position absolute
   height 100%
   width 100%
+  overflow hidden
 </style>
 
 <template>
@@ -13,7 +15,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   data() {

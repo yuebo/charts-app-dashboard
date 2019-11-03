@@ -18,7 +18,7 @@ Vue.use(VueRouer)
 Vue.use(Vuex)
 
 Vue.prototype.$axios = axios.create({
-  baseURL: "http://localhost:8080"
+  baseURL: "http://192.168.7.44:8080"
 })
 
 const store = new Vuex.Store({

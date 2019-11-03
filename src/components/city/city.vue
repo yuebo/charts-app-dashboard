@@ -1,11 +1,10 @@
 <!-- 柱状图 -->
 <style lang="stylus" scoped>
-  .columnChart
-    height 800px
+  .cityChart
+    height 100%
+    position relative
     background url('../../assets/bg.jpg') no-repeat
     background-size 100% 100%
-    color white
-
     .main
       width 100%
       height calc(100% - 100px)
@@ -13,9 +12,9 @@
 </style>
 
 <template>
-  <div class="columnChart">
+  <div class="cityChart chart">
     <v-header :name="name" :legendArr="legendArr" :myChart="myChart"></v-header>
-    <v-filter :myChart="myChart" v-if="myChart._dom" @change="onChange" :reverse="true"></v-filter>
+    <v-filter :myChart="myChart" v-if="myChart._dom" @change="onChange" :reverse="true" :picker="false"></v-filter>
     <div class="main"></div>
   </div>
 
@@ -32,7 +31,7 @@
         legendArr: [],
         color: this.$store.state.color,
         myChart: {},
-        name: '2018案件大类分析',
+        name: '2018与2019乡镇分布对比',
         startDate: '',
         endDate: '',
         data: []
@@ -42,7 +41,7 @@
       initChart() {
         // debugger
         // 基于准备好的dom，初始化echarts实例
-        this.myChart = echarts.init(document.querySelector('.columnChart .main'));
+        this.myChart = echarts.init(document.querySelector('.cityChart .main'));
         this.myChart.setOption({
           tooltip: {
             trigger: 'axis',
@@ -51,7 +50,7 @@
             }
           },
           legend: {
-            data: ['2018年'],
+            data: ['2018年', '2019年'],
             textStyle: {
               color: 'white'
             }
@@ -92,13 +91,26 @@
               type: 'bar',
               barWidth: 16,
               data: this.data.data2,
+              label: {
+                normal: {
+                  show: true,
+                  position: 'right'
+                }
+              },
+              color: ['rgba(230, 230, 230, 0.8)']
+            },
+            {
+              name: '2019年',
+              type: 'bar',
+              barWidth: 16,
               color: ['rgba(0, 230, 0, 0.8)'],
               label: {
                 normal: {
                   show: true,
                   position: 'right'
                 }
-              }
+              },
+              data: this.data.data
             }
           ]
         });
@@ -111,16 +123,15 @@
       request() {
         let promise = this.$axios.get("/charts", {
           params: {
-            startDate: this.startDate,
-            endDate: this.endDate,
-            level2: "",
-            groupBy: 'level1',
-            lastYear: true
+            lastYear: true,
+            groupBy: "town"
           }
         })
         promise.then(data => {
+          // alert(JSON.stringify(data.data))
           this.data = data.data
           this.initChart();
+          // debugger
           this.legendArr = this.myChart.getOption().series
           this.legendArr.forEach((data) => {
             data.selected = true;
